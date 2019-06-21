@@ -8,15 +8,12 @@ functions for the analysis. (These libraries are still a work in progress)
 See the plots folder for upset plots of the GDC data without any filtering. 
 
 gdc.ipynb contains all the necessary code for plotting upset plots and venn diagrams of the 
-data, with or without filtering (currently working on modularizing this code for callable
-plotting functions, and translating the code to include the library functions).   
+data, with or without filtering.   
 
 gdc_stats.ipynb provides a stack bar plot visualization of the average proportion of variants(unfiltered)
 that each combination of variant callers found for each patient from the gdc data. 
 
-function.ipynb contains a function for useful tables for accuracy analysis, that uses the two-variant caller   
-rule to count the number of 'real' variants, as well as a function that performs outlier analysis for the largest   
-outlier(most number of variants) from the patients' datasets. 
+function.ipynb contains a function for useful tables for accuracy analysis, as well as a function that performs outlier analysis for the largest outlier(most number of variants) of the patients. 
 
 
 There are three available filtering methods: pairing genes with correpsonding cancers from the Bailey_et_al_2018_sig_mut_genes.txt
