@@ -44,6 +44,7 @@ def baileydf(possible_cancers, possible_callers, keys, original, impacts, filt):
 
         content = set_contents(arg, possible_callers, keys)
         dfbailey.loc[:,cancer] = how_many_tumor(cancer, coadread, content, dictofgenes, filt, impacts, keys)
+    dfbailey.loc['Total'] = dfbailey.sum(axis=0)
     os.chdir(original)
     return dfbailey
 
@@ -74,6 +75,7 @@ def cgcdf(possible_cancers, possible_callers, keys, original, impacts, filt):
             
         content = set_contents(arg, possible_callers, keys)
         dfcgc.loc[:,cancer] = how_many_tumor_cgc(content, cgc, filt, impacts, keys)
+    dfcgc.loc['Total'] = dfcgc.sum(axis=0)
     os.chdir(original)   
     return dfcgc
 
@@ -112,5 +114,7 @@ def pancandf(possible_cancers, possible_callers, keys, original, impacts, filt):
             
         content = set_contents(arg, possible_callers, keys)    
         dfpancan.loc[:,cancer] = how_many_pancan(content, pancandict, filt, impacts, keys)
+    
+    dfpancan.loc['Total'] = dfpancan.sum(axis=0)
     os.chdir(original)    
     return dfpancan

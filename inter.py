@@ -29,3 +29,10 @@ def intersections(list_of_sets):
         ret.extend(inters[len(sets)-1-j])
     
     return ret
+
+def n_intersections(sets, nways):
+    combs = my_combs(sets, nways)
+    inters = []
+    for c in range(len(combs)):
+        inters.append(intersections(combs[c]))
+    return inters

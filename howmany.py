@@ -44,3 +44,14 @@ def how_many_pancan(content, pancandict, filt, impacts, keys):
                         count += 1
         tumorcount.append(count)
     return tumorcount
+
+def how_many_impact(content, keys, level):
+    impact = []
+    for key in keys:
+        count = 0
+        for c in content[key]:
+            if c[7] == level:
+                count += 1
+        impact.append(count)
+            
+    return impact
