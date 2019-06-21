@@ -2,7 +2,7 @@
 In its current state, this github repo provides a comprehensive analysis on variant calling
 data from the Genomic Data Commons.    
   
-Files comb.py, df.py, howmany.py, inter.py, contents.py contatin the necessary libraries of 
+Files comb.py, df.py, howmany.py, inter.py, contents.py contain the necessary libraries of 
 functions for the analysis. (These libraries are still a work in progress)
 
 See the plots folder for upset plots of the GDC data without any filtering. 
