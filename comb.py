@@ -16,9 +16,9 @@ def parse_maf(fp):
         chrom =temp[4]
         s_pos = temp[5]
         e_pos = temp[6]
-        ref = temp[11]
-        tum_allele_1 = temp[12]
-        tum_allele_2 = temp[13]
+        ref = temp[10]
+        tum_allele_1 = temp[11]
+        tum_allele_2 = temp[12]
         impact = temp[93]
         filt = temp[110]
         var = (gene,chrom, s_pos, e_pos, ref, tum_allele_1, tum_allele_2,impact, filt)

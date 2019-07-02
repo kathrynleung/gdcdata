@@ -6,7 +6,7 @@ def set_contents(dat, possible_callers, keys):
     for i in range(len(dat)):
         patients = patients & set(list(dat[i].keys()))
     
-    
+
     for patient in patients:
         sets = []
         for j in range(len(dat)):
@@ -18,3 +18,14 @@ def set_contents(dat, possible_callers, keys):
        
     return data
 
+def filtered_contents(dat, keys, cgc, impacts, filt):
+    for key in keys:
+        delete = []        
+        for c in dat[key]:
+            if (set(c) & set(cgc['Gene Symbol'])) == set() or (set(c) & impacts) == set() or (set(c) & filt) == set():
+                delete.append(c)
+        for rem in delete:
+            dat[key].remove(rem)
+
+                        
+    return dat
