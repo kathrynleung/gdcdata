@@ -9,7 +9,7 @@ def parse_maf(fp):
         temp = line.strip().split('\t')
         if line[0] == '#' or temp[0] == 'Hugo_Symbol':
             continue
-        ID = temp[16] + '_' + temp[17] # 'tumor'_'normal'
+        ID = temp[15] + '_' + temp[16] 
         if ID not in caller_vars:
             caller_vars[ID] = set()
         gene = temp[0]

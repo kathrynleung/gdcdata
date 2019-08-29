@@ -11,11 +11,11 @@ def table(callers, additional_callers, cancer, cardinality, impacts, filt, keys,
         else:
             df = bcp
     elif bcp == 'BAILEY':
-        df = baileydf(possible_cancers, possible_callers, keys, original, impacts, filt).drop(['Total'], axis=0)
+        df = baileydf(possible_cancers, possible_callers, keys,impacts, filt).drop(['Total'], axis=0)
     elif bcp == 'CGC':
-        df = cgcdf(possible_cancers, possible_callers, keys, original, impacts, filt).drop(['Total'], axis=0)
+        df = cgcdf(possible_cancers, possible_callers, keys, impacts, filt).drop(['Total'], axis=0)
     elif bcp == 'PANCAN':
-        df = pancandf(possible_cancers, possible_callers, keys, original, impacts, filt).drop(['Total'], axis=0)
+        df = pancandf(possible_cancers, possible_callers, keys, impacts, filt).drop(['Total'], axis=0)
     
     
     sets = []
@@ -29,17 +29,17 @@ def table(callers, additional_callers, cancer, cardinality, impacts, filt, keys,
     for i in range(len(sets)):
         sets[i] = tuple(sets[i])
     
-    if len(callers) >= cardinality:
-        sums = pd.DataFrame(0, index=sets, columns=('real', 'real % diff', 'total', 'total % diff', '% of all real'))
-    else:
-        sums = pd.DataFrame(0, index=sets, columns=('real', 'total', '% of all real'))
+    #if len(callers) >= cardinality:
+    sums = pd.DataFrame(0, index=sets, columns=('real', 'real % diff', 'total', 'total % diff', '% of all real'))
+    #else:
+    #    sums = pd.DataFrame(0, index=sets, columns=('real', 'total', '% of all real'))
     
     # real counts
     su = []
     for i in range(len(sets)):
         index = []
         for j in range(len(keys)):
-            if len(set(sets[i])&keys[j]) >= cardinality:
+            if len(set(sets[i])&keys[j]) >= 1 and len(keys[j]) >= cardinality:
                 index.append(j)
         s =[]
         for k in range(len(index)):
@@ -70,27 +70,28 @@ def table(callers, additional_callers, cancer, cardinality, impacts, filt, keys,
     fractions = 100*(tops/realsum)       
     sums.loc[:,'% of all real'] = fractions   
     
-    if len(callers) >= cardinality:   
+    #if len(callers) >= cardinality:   
         # real percentage difference, with respect to the initial two way intersection
-        rpercent = []
-        for i in range(len(sets)):
-            rpercent.append(100*((sums['real'][i] - sums['real'][0]) / sums['real'][0]))
-        sums.loc[:,'real % diff'] = rpercent
+    rpercent = []
+    for i in range(len(sets)):
+        rpercent.append(100*((sums['real'][i] - sums['real'][0]) / sums['real'][0]))
+    sums.loc[:,'real % diff'] = rpercent
     
     # total percentage difference, with respect to the initial two way intersection
-        tpercent = []
-        for i in range(len(sets)):
-            tpercent.append(100*((sums['total'][i] - sums['total'][0]) / sums['total'][0]))
-        sums.loc[:,'total % diff'] = tpercent
+    tpercent = []
+    for i in range(len(sets)):
+        tpercent.append(100*((sums['total'][i] - sums['total'][0]) / sums['total'][0]))
+    sums.loc[:,'total % diff'] = tpercent
     
     #sort by real percentage difference values
-        if individual == False:
-            sums = sums.sort_values(['real % diff'], ascending=False)
+    if individual == False:
+        sums = sums.sort_values(['real % diff'], ascending=False)
+    
     if tab == True:
-        if len(callers) >= cardinality: 
-            print(tabulate(sums, headers=['variant callers', 'real', 'real % diff', 'total', 'total % diff', '% of all real'], tablefmt='psql',floatfmt=(".0f",".0f",".3f", ".0f", ".3f",".3f")))
-        else:
-            print(tabulate(sums, headers=['variant callers', 'real', 'total', '% of all real'], tablefmt='psql',floatfmt=(".0f",".0f",".0f", ".3f")))
+        #if len(callers) >= cardinality: 
+        print(tabulate(sums, headers=['variant callers', 'real', 'real % diff', 'total', 'total % diff', '% of all real'], tablefmt='psql',floatfmt=(".0f",".0f",".3f", ".0f", ".3f",".3f")))
+        #else:
+        #    print(tabulate(sums, headers=['variant callers', 'real', 'total', '% of all real'], tablefmt='psql',floatfmt=(".0f",".0f",".0f", ".3f")))
         print()
     
     return sums
